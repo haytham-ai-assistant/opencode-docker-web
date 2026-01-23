@@ -1,0 +1,40 @@
+services:
+  opencode:
+    build: .
+    # Use a project‑prefixed container name to avoid collisions
+    container_name: ${COMPOSE_PROJECT_NAME:-opencode}_app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    volumes:
+      # Mount the project directory into /app for live reload
+      - .:/app:z
+      # Dedicated workspace folder
+      - ./workspace:/workspace:z
+      # OpenCode configuration directory
+      - ./config:/opt/opencode/config:z
+      # Read‑only Git config from the host (for git commands inside the container)
+      - ~/.gitconfig:/root/.gitconfig:ro
+      # Read‑only GitHub CLI config from the host (for gh authentication)
+      - ~/.config/gh:/root/.config/gh:ro
+
+    environment:
+      OPENCODE_API_KEY: ${OPENCODE_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    # For development – starts a Bash shell. Replace with your app’s start command when ready.
+    command: bash
+    # Uncomment if you want the container to restart automatically.
+    # restart: unless-stopped
+
+    # Optional health‑check – useful when container exposes a HTTP endpoint.
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+

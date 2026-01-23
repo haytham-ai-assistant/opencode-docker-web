@@ -1,0 +1,23 @@
+# Environment variables
+.env
+
+# Workspace directory
+workspace/
+
+# Config files (may contain sensitive info)
+config/*
+!config/.gitkeep
+
+# Docker volumes
+.docker/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
