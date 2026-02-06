@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     build-essential \
     unzip \
+    pandoc \
     && rm -rf /var/lib/apt/lists/*
 
 # Install chsrc
