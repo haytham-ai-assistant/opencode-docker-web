@@ -1,7 +1,10 @@
+# Agents
+AGENTS.md
+
 # Environment variables
 .env
 
-# Workspace directory
+# Workspace directory (user projects and persistent package manager data)
 workspace/
 
 # Config files (may contain sensitive info)
@@ -21,3 +24,49 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Persistent package manager directories (auto-created in workspace/)
+# These are already covered by workspace/ rule, listed here for clarity
+# workspace/.venv/          # Python virtual environment
+# workspace/.mise/          # mise language version manager
+# workspace/.cargo/         # Rust toolchain and crates
+# workspace/.npm/           # npm global packages
+# workspace/.local/         # User-local binaries (mise installs here)
+# workspace/node_modules/   # Node.js project dependencies
+
+# Temporary and build files (root-level, outside workspace)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Rust
+target/
+**/*.rs.bk
+
+# Node.js (root-level)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Misc
+*.swp
+*.swo
+*~
+\#*\#
+.\#*

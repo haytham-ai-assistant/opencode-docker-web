@@ -44,7 +44,12 @@ The container mounts a `workspace/` directory for your project code and accepts 
    docker compose up -d
    ```
 
-4. **Enter the container**  
+4. **Access OpenCode Web Interface**  
+   OpenCode web server starts automatically. Access it at:
+   - **Local**: http://localhost:4096 (or the port specified by `OPENCODE_SERVER_HOST_PORT`)
+   - **Network**: http://<your-machine-ip>:4096 (if `OPENCODE_SERVER_HOSTNAME=0.0.0.0`)
+   
+   To enter the container for command-line usage:
    ```bash
    docker compose exec opencode bash
    ```
@@ -91,6 +96,32 @@ git config --global user.email "you@example.com"
 
 Authenticate with GitHub by running `gh auth login` inside the container or by mounting your local GH config as shown in the docker-compose file.
 
+### OpenCode Web Server Configuration
+
+The container runs OpenCode web server by default. Configure it using environment variables in your `.env` file:
+
+| Environment Variable | Description | Default |
+|---------------------|-------------|---------|
+| `OPENCODE_SERVER_USERNAME` | HTTP basic authentication username | `opencode` |
+| `OPENCODE_SERVER_PASSWORD` | HTTP basic authentication password | (none) |
+| `OPENCODE_SERVER_PORT` | Port inside container | `4096` |
+| `OPENCODE_SERVER_HOST_PORT` | Host machine port mapping | `4096` |
+| `OPENCODE_SERVER_HOSTNAME` | Hostname to bind to | `0.0.0.0` |
+| `OPENCODE_SERVER_MDNS` | Enable mDNS discovery | `false` |
+| `OPENCODE_SERVER_MDNS_DOMAIN` | Custom mDNS domain | `opencode.local` |
+| `OPENCODE_SERVER_CORS` | Comma-separated CORS origins | (none) |
+
+Example `.env` configuration:
+```bash
+OPENCODE_SERVER_USERNAME=opencode
+OPENCODE_SERVER_PASSWORD=your_secure_password
+OPENCODE_SERVER_PORT=4096
+OPENCODE_SERVER_HOST_PORT=4096
+OPENCODE_SERVER_HOSTNAME=0.0.0.0
+OPENCODE_SERVER_MDNS=true
+OPENCODE_SERVER_CORS=https://example.com,http://localhost:3000
+```
+
 ## Usage Examples
 
 ### OpenCode
@@ -99,7 +130,18 @@ Authenticate with GitHub by running `gh auth login` inside the container or by m
 # Inside the container
 cd /workspace
 opencode --help
+
+# Start OpenCode web server manually (if needed)
+opencode web --port 4096 --hostname 0.0.0.0 --mdns
 ```
+
+### OpenCode Web Interface
+
+After starting the container, access the web interface at http://localhost:4096 (or your configured port).
+
+- **Authentication**: If `OPENCODE_SERVER_PASSWORD` is set, use the configured username and password
+- **Sessions**: Manage your OpenCode sessions through the web interface
+- **Server Status**: View connected servers and their status
 
 ### Git
 
@@ -127,8 +169,9 @@ gh pr create
 ```
 .
 ├── Dockerfile              # Docker image definition
-├── docker compose.yml      # Docker Compose configuration
+├── docker-compose.yml      # Docker Compose configuration
 ├── .env.example           # Example environment variables
+├── entrypoint.sh          # OpenCode web server startup script
 ├── config/                # OpenCode configuration files (create this)
 ├── workspace/             # Your working directory (create this)
 ```

@@ -4,7 +4,7 @@ FROM node:20-slim
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive \
     OPENCODE_CONFIG_DIR=/opt/opencode/config \
-    PATH="/root/.cargo/bin:/root/.local/bin:${PATH}"
+    PATH="/root/.cargo/bin:/root/.local/bin:/root/.opencode/bin:${PATH}"
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     build-essential \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Install GitHub CLI
@@ -28,6 +29,10 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | d
 
 # Install OpenCode from npm
 RUN curl -fsSL https://opencode.ai/install | bash
+RUN test -x /root/.opencode/bin/opencode && echo "OpenCode installed successfully" || (echo "OpenCode installation failed" && exit 1)
+
+# Install x-cmd
+RUN eval "$(curl https://get.x-cmd.com)"
 
 # Install Rust toolchain
 RUN curl -sSf https://sh.rustup.rs --output rustup-init && \
@@ -51,5 +56,12 @@ VOLUME ${OPENCODE_CONFIG_DIR}
 # Set up volume for workspace
 VOLUME /workspace
 
-# Default command
-CMD ["bash"]
+# Set up volume for home
+VOLUME /root
+
+# Copy entrypoint script
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Default command: start OpenCode web server
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
