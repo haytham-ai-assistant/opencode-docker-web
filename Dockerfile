@@ -34,6 +34,7 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | d
     && rm -rf /var/lib/apt/lists/*
 
 # Install OpenCode from npm
+RUN mkdir -p /root/.local/share/opencode
 RUN curl -fsSL https://opencode.ai/install | bash
 RUN test -x /root/.opencode/bin/opencode && echo "OpenCode installed successfully" || (echo "OpenCode installation failed" && exit 1)
 
@@ -64,6 +65,9 @@ VOLUME /workspace
 
 # Set up volume for home
 VOLUME /root
+
+# Copy .nanorc
+COPY .nanorc /root/.nanorc
 
 # Copy entrypoint script
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
