@@ -12,6 +12,8 @@ services:
       - ./workspace:/workspace:z
       # OpenCode configuration directory
       - ./config:/opt/opencode/config:z
+      # OpenCode settings directory
+      - ./opencode:/root/.local/share/opencode:z
       # Read‑only Git config from the host (for git commands inside the container)
       - ~/.gitconfig:/root/.gitconfig:ro
       # Read‑only GitHub CLI config from the host (for gh authentication)

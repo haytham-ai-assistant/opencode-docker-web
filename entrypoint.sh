@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# Update source
+chsrc set cargo
+chsrc set node
+chsrc set debian
+
 # Build arguments array for opencode web
 args=()
 

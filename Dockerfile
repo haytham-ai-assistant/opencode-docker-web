@@ -8,6 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
+    nano \
     git \
     curl \
     wget \
@@ -18,6 +19,11 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     unzip \
     && rm -rf /var/lib/apt/lists/*
+
+# Install chsrc
+RUN curl -LO https://gitee.com/RubyMetric/chsrc/releases/download/pre/chsrc_latest-1_amd64.deb
+RUN apt install ./chsrc_latest-1_amd64.deb
+RUN rm ./chsrc_latest-1_amd64.deb
 
 # Install GitHub CLI
 RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
