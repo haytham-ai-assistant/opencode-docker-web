@@ -8,17 +8,34 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
+    bash \
     nano \
-    git \
-    curl \
+    chromium \
     wget \
+    fonts-liberation \
+    fonts-noto-cjk \
+    fonts-noto-color-emoji \
     gnupg \
-    ca-certificates \
+    git \
+    gosu \
+    jq \
     python3 \
     python3-pip \
     build-essential \
     unzip \
     pandoc \
+    socat \
+    tini \
+    websockify \
+    gh \
+    texlive-base \
+    texlive-binaries \
+    texlive-latex-base \
+    texlive-fonts-recommended \
+    texlive-latex-recommended \
+    texlive-lang-chinese \
+    texlive-latex-extra \
+    nix-setup-systemd \
     && rm -rf /var/lib/apt/lists/*
 
 # Install chsrc
