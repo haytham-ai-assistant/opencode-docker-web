@@ -1,5 +1,5 @@
 # OpenCode Docker Image
-FROM node:20-slim
+FROM node:22-slim
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive \
