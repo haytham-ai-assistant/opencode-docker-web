@@ -1,10 +1,13 @@
 #!/bin/bash
 set -e
 
-# Update source
-chsrc set cargo
-chsrc set node
-chsrc set debian
+# Update source (run in background, not blocking opencode web)
+# Execute chsrc commands serially
+{
+  chsrc set cargo
+  chsrc set node
+  chsrc set debian
+} &
 
 # Build arguments array for opencode web
 args=()
