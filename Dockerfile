@@ -28,6 +28,7 @@ RUN apt-get update && apt-get install -y \
     tini \
     websockify \
     gh \
+    file \
     texlive-base \
     texlive-binaries \
     texlive-latex-base \
