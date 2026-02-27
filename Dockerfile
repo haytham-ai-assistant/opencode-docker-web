@@ -91,5 +91,8 @@ COPY .nanorc /root/.nanorc
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
+COPY retry-exec /usr/local/bin/retry-exec
+RUN chmod +x /usr/local/bin/retry-exec
+
 # Default command: start OpenCode web server
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
