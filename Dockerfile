@@ -29,6 +29,7 @@ RUN apt-get update && apt-get install -y \
     websockify \
     gh \
     file \
+    pdftotext \
     texlive-base \
     texlive-binaries \
     texlive-latex-base \
